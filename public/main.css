@@ -323,3 +323,111 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.blog-card {
+  background: #161616;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+  /* Reduced from 20px */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 18px);
+  /* Ensures equal height in grid */
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--theme-color-rgb), 0.4);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 140px;
+  /* Smaller thumbnail */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.blog-card h3 {
+  font-size: 1.1rem;
+  /* Slightly smaller title */
+  margin: 0 0 8px;
+  line-height: 1.3;
+  flex-grow: 0;
+}
+
+.blog-card h3 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.blog-card h3 a:hover {
+  color: var(--theme-color);
+}
+
+.blog-card p {
+  font-size: 0.9rem;
+  /* Smaller description text */
+  opacity: 0.8;
+  margin: 0 0 12px;
+  flex-grow: 1;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.blog-card a.read-more {
+  color: var(--theme-color);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.blog-card a.read-more:hover {
+  text-decoration: underline;
+}
+
+.view-all-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.view-all-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .blog-card {
+    padding: 14px;
+  }
+
+  .blog-card img {
+    height: 120px;
+  }
+}

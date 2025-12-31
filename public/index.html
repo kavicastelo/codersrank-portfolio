@@ -136,6 +136,23 @@
       </div>
     </section>
 
+    <section aria-labelledby="blog">
+      <h2 id="blog">Blog</h2>
+      <p>I write about Angular, TypeScript, ethical AI, system design, and lessons from building scalable applications
+        on Medium.</p>
+
+      <!-- Medium RSS → JSON feed (via rss2json) for latest 4 articles -->
+      <div class="blog-grid" id="medium-posts">
+        <p class="loading">Loading latest articles...</p>
+      </div>
+
+      <p style="margin-top: 2em; text-align: center;">
+        <a href="https://medium.com/@kavicastelo" target="_blank" rel="noopener noreferrer" class="view-all-btn">
+          View all articles on Medium →
+        </a>
+      </p>
+    </section>
+
     <section aria-labelledby="recent-projects">
       <h2 id="recent-projects">Recent Projects</h2>
       <p>Passionate about building high-performance full-stack applications, ethical AI solutions, scalable SaaS
@@ -214,6 +231,49 @@
         animateValue(el, stats[key] || 0);
       });
     });
+  </script>
+
+  <script>
+    // Fetch latest Medium posts using RSS → JSON service
+    async function loadMediumPosts() {
+      const mediumUsername = "kavicastelo";
+      const rss2json = "https://api.rss2json.com/v1/api.json";
+      const mediumRss = `https://medium.com/feed/@${mediumUsername}`;
+
+      try {
+        const response = await fetch(`${rss2json}?rss_url=${encodeURIComponent(mediumRss)}`);
+        const data = await response.json();
+
+        if (data.status !== "ok") throw new Error("Failed to load feed");
+
+        const container = document.getElementById("medium-posts");
+        container.innerHTML = "";
+
+        data.items.forEach(item => {
+          const card = document.createElement("article");
+          card.className = "blog-card";
+
+          const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
+          const thumbnail = imgMatch ? imgMatch[1] : "i/default-blog-thumbnail.jpg";
+
+          card.innerHTML = `
+  ${imgMatch ? `<img src="${thumbnail}" alt="${item.title}" loading="lazy">` : ''}
+  <h3><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+  <p>${item.description.replace(/<[^>]*>/g, '').slice(0, 140) || item.content.replace(/<[^>]*>/g, '').slice(0, 140) + '...'}</p>
+  <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="read-more">Read more →</a>
+`;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Error loading Medium posts:", err);
+        document.getElementById("medium-posts").innerHTML =
+          `<p style="text-align:center; opacity:0.6;">Could not load articles right now. 
+         <a href="https://medium.com/@${mediumUsername}" target="_blank" rel="noopener noreferrer">Visit Medium profile →</a></p>`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadMediumPosts);
   </script>
 </body>
 
