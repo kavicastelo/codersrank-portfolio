@@ -7,15 +7,32 @@
   <meta name="description"
     content="Kavi Castelo - Full-Stack Software Engineer specializing in Angular, TypeScript, Ethical AI, and Scalable Systems. Tech Lead and Entrepreneur based in Matara, Sri Lanka.">
   <meta name="keywords"
-    content="full-stack developer, Angular, TypeScript, Ethical AI, scalable systems, tech lead, entrepreneur, Sri Lanka">
+    content="full-stack developer, Angular, TypeScript, Ethical AI, scalable systems, tech lead, entrepreneur, Sri Lanka, Kavi Castelo">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
   <meta property="og:title" content="Kavi Castelo - Full-Stack Software Engineer">
   <meta property="og:description"
     content="Passionate about building high-performance applications and ethical AI solutions. Explore my portfolio, coding stats, and experience.">
   <meta property="og:image" content="https://kavicastelo-codersrank.netlify.app/i/avatar.jpeg">
   <meta property="og:url" content="https://kavicastelo-codersrank.netlify.app">
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <title>Kavi Castelo - Full-Stack Software Engineer</title>
+  <meta name="twitter:title" content="Kavi Castelo - Full-Stack Software Engineer">
+  <meta name="twitter:description"
+    content="Senior Full-Stack Developer specializing in Angular, AI & Scalable Systems.">
+  <meta name="twitter:image" content="https://kavicastelo-codersrank.netlify.app/i/avatar.jpeg">
+
+  <title>Kavi Castelo | Full-Stack Software Engineer & Tech Lead</title>
+
   <link rel="stylesheet" href="main.css">
+
+  <!-- Performance: Preconnect to external APIs -->
+  <link rel="preconnect" href="https://api.github.com">
+  <link rel="preconnect" href="https://api.rss2json.com">
+  <link rel="preconnect" href="https://unpkg.com">
+
   <link rel="preload" href="https://unpkg.com/@codersrank/summary/codersrank-summary.min.js" as="script">
   <link rel="preload" href="https://unpkg.com/@codersrank/activity/codersrank-activity.min.js" as="script">
   <link rel="preload" href="https://unpkg.com/@codersrank/skills-chart/codersrank-skills-chart.min.js" as="script">
@@ -24,11 +41,46 @@
     as="script">
   <link rel="preload" href="https://unpkg.com/@codersrank/education/codersrank-education.min.js" as="script">
   <link rel="icon" href="i/favicon.ico" type="image/x-icon">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kavi Castelo",
+      "url": "https://kavicastelo-codersrank.netlify.app",
+      "jobTitle": "Full-Stack Software Engineer",
+      "sameAs": [
+        "https://github.com/kavicastelo",
+        "https://linkedin.com/in/kavi-castelo",
+        "https://twitter.com/kavicastelo",
+        "https://medium.com/@kavicastelo"
+      ],
+      "knowsAbout": ["Angular", "TypeScript", "Node.js", "AI", "Software Engineering"]
+    }
+  </script>
 </head>
 
 <body>
   <main id="main-content">
     <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </button>
 
     <header>
       <img src="i/avatar.webp" srcset="i/avatar.jpeg" alt="Profile photo of Kavi Castelo" class="avatar" loading="lazy">
@@ -177,104 +229,10 @@
   <script src="https://unpkg.com/@codersrank/portfolio/codersrank-portfolio.min.js" defer></script>
   <script src="https://unpkg.com/@codersrank/work-experience/codersrank-work-experience.min.js" defer></script>
   <script src="https://unpkg.com/@codersrank/education/codersrank-education.min.js" defer></script>
-  <script>
-    const username = "kavicastelo";
 
-    async function fetchGitHubStats() {
-      try {
-        const [userRes, reposRes] = await Promise.all([
-          fetch(`https://api.github.com/users/${username}`),
-          fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
-        ]);
-
-        if (!userRes.ok || !reposRes.ok) {
-          throw new Error('GitHub API request failed');
-        }
-
-        const user = await userRes.json();
-        const repos = await reposRes.json();
-
-        const stars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
-
-        return {
-          repos: user.public_repos,
-          followers: user.followers,
-          stars,
-          contributions: 3930, // Consider dynamic fetch if API allows (e.g., via GraphQL)
-          streak: 850, // Consider dynamic calculation via contributions API
-          years: new Date().getFullYear() - 2021
-        };
-      } catch (error) {
-        console.error('Error fetching GitHub stats:', error);
-        return { repos: 0, followers: 0, stars: 0, contributions: 0, streak: 0, years: 0 }; // Fallback
-      }
-    }
-
-    function animateValue(el, end) {
-      let start = 0;
-      const duration = 1200;
-      const step = Math.max(1, Math.floor(end / 60));
-      const interval = setInterval(() => {
-        start += step;
-        if (start >= end) {
-          el.textContent = end.toLocaleString() + '+';
-          clearInterval(interval);
-        } else {
-          el.textContent = start.toLocaleString();
-        }
-      }, duration / 60);
-    }
-
-    fetchGitHubStats().then(stats => {
-      document.querySelectorAll(".stat-number").forEach(el => {
-        const key = el.dataset.key;
-        animateValue(el, stats[key] || 0);
-      });
-    });
-  </script>
-
-  <script>
-    // Fetch latest Medium posts using RSS → JSON service
-    async function loadMediumPosts() {
-      const mediumUsername = "kavicastelo";
-      const rss2json = "https://api.rss2json.com/v1/api.json";
-      const mediumRss = `https://medium.com/feed/@${mediumUsername}`;
-
-      try {
-        const response = await fetch(`${rss2json}?rss_url=${encodeURIComponent(mediumRss)}`);
-        const data = await response.json();
-
-        if (data.status !== "ok") throw new Error("Failed to load feed");
-
-        const container = document.getElementById("medium-posts");
-        container.innerHTML = "";
-
-        data.items.forEach(item => {
-          const card = document.createElement("article");
-          card.className = "blog-card";
-
-          const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
-          const thumbnail = imgMatch ? imgMatch[1] : "i/default-blog-thumbnail.jpg";
-
-          card.innerHTML = `
-  ${imgMatch ? `<img src="${thumbnail}" alt="${item.title}" loading="lazy">` : ''}
-  <h3><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
-  <p>${item.description.replace(/<[^>]*>/g, '').slice(0, 140) || item.content.replace(/<[^>]*>/g, '').slice(0, 140) + '...'}</p>
-  <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="read-more">Read more →</a>
-`;
-
-          container.appendChild(card);
-        });
-      } catch (err) {
-        console.error("Error loading Medium posts:", err);
-        document.getElementById("medium-posts").innerHTML =
-          `<p style="text-align:center; opacity:0.6;">Could not load articles right now. 
-         <a href="https://medium.com/@${mediumUsername}" target="_blank" rel="noopener noreferrer">Visit Medium profile →</a></p>`;
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", loadMediumPosts);
-  </script>
+  <script src="scripts/github-stats.js" defer></script>
+  <script src="scripts/medium-posts.js" defer></script>
+  <script src="scripts/ui-effects.js" defer></script>
 </body>
 
 </html>
